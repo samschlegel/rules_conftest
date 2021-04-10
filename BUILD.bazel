@@ -1,0 +1,3 @@
+load("//conftest:def.bzl", "conftest")
+
+conftest(name = "conftest")

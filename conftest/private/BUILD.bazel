@@ -1,0 +1,29 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+exports_files(["conftest.sh.tpl"])
+
+bzl_library(
+    name = "repositories",
+    srcs = ["repositories.bzl"],
+    visibility = ["//conftest:__subpackages__"],
+    # Don't list dependency on @bazel_tools//tools/build_defs/repo:http.bzl
+    deps = [
+        ":platforms",
+    ],
+)
+
+bzl_library(
+    name = "toolchain",
+    srcs = ["toolchain.bzl"],
+    visibility = ["//conftest:__subpackages__"],
+    deps = [
+        ":platforms",
+    ],
+)
+
+bzl_library(
+    name = "platforms",
+    srcs = ["platforms.bzl"],
+    visibility = ["//conftest:__subpackages__"],
+    deps = [],
+)

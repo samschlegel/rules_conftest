@@ -1,0 +1,3 @@
+load("//conftest/private:toolchain.bzl", "declare_toolchains")
+
+declare_toolchains()

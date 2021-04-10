@@ -4,15 +4,21 @@ conftest_test(
     name = "service_test",
     srcs = ["service.yaml"],
     policies = glob(["policy/*.rego"]),
-    data = [],
 )
 
 conftest_test(
     name = "service_fail_on_warn_test",
     srcs = ["service.yaml"],
     policies = glob(["policy/*.rego"]),
-    data = [],
     args = [
         "--fail-on-warn",
-    ]
+    ],
+    expected_exit_code = 1,
+)
+
+conftest_test(
+    name = "deployment_test",
+    srcs = ["deployment.yaml", "service.yaml"],
+    policies = glob(["policy/*.rego"]),
+    expected_exit_code = 1,
 )

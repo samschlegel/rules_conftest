@@ -10,8 +10,11 @@ def _conftest_test_impl(ctx):
         template = ctx.file._template,
         substitutions = {
             "%{conftest}": binary_file.short_path,
+            "%{data_files}": " ".join(["-d " + f.short_path for f in ctx.files.data]),
+            "%{policy_files}": " ".join(["-p " + f.short_path for f in ctx.files.policies]),
             "%{input_files}": " ".join([f.short_path for f in ctx.files.srcs]),
             "%{args}": " ".join([shell.quote(a) for a in ctx.attr.args]),
+            "%{expected_exit_code}": str(ctx.attr.expected_exit_code),
         },
         output = script,
     )
@@ -35,7 +38,8 @@ conftest_test = rule(
     attrs = {
         "srcs": attr.label_list(allow_files = True),
         "policies": attr.label_list(allow_files = True),
-        "data": attr.label_list(allow_files = True),
+        "data": attr.label_list(allow_files = True, default = []),
+        "expected_exit_code": attr.int(default = 0),
         "_template": attr.label(
             default = Label("//conftest/private:conftest_test.sh.tpl"),
             allow_single_file = True,

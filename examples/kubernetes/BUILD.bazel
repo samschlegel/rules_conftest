@@ -1,0 +1,18 @@
+load("//conftest:def.bzl", "conftest_test")
+
+conftest_test(
+    name = "service_test",
+    srcs = ["service.yaml"],
+    policies = glob(["policy/*.rego"]),
+    data = [],
+)
+
+conftest_test(
+    name = "service_fail_on_warn_test",
+    srcs = ["service.yaml"],
+    policies = glob(["policy/*.rego"]),
+    data = [],
+    args = [
+        "--fail-on-warn",
+    ]
+)

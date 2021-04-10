@@ -50,10 +50,8 @@ def _conftest_toolchain_alias(ctx):
         DefaultInfo(
             executable = script,
             runfiles = ctx.runfiles(
-                files = [
-                    binary_file,
-                ],
                 transitive_files = depset(transitive = [
+                    binary.files,
                     depset(binary[DefaultInfo].default_runfiles.files),
                     ctx.attr._runfiles_bash.files,
                 ]),

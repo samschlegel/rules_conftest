@@ -1,0 +1,7 @@
+load("//conftest:def.bzl", "conftest_test")
+
+conftest_test(
+    name = "terraform_test",
+    srcs = ["main.tf"],
+    policies = glob(["policy/*.rego"]),
+)

@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 
-OUTPUT="$("%{conftest}" test -o json %{data_files} %{policy_files} %{input_files} %{args} "$@")"
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+OUTPUT="$("%{conftest}" test %{data_files} %{policy_files} %{input_files} %{args} "$@")"
 EXIT_CODE="$?"
 EXPECTED_EXIT_CODE="%{expected_exit_code}"
 
-echo "$OUTPUT"
+printf "conftest output:\n"
+printf "$OUTPUT\n"
 
 if [ $EXIT_CODE -ne $EXPECTED_EXIT_CODE ] ; then
-  echo "FAIL (exit code): %s"
-  echo "Expected: $EXPECTED_EXIT_CODE"
-  echo "Actual: $EXIT_CODE"
-  if [ %s = true ]; then
-    echo "Output: $OUTPUT"
-  fi
+  printf "${RED}FAIL (exit code)${NC} - Expected $EXPECTED_EXIT_CODE, got $EXIT_CODE\n"
   exit 1
 fi
